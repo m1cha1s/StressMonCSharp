@@ -23,7 +23,7 @@ namespace StressMon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            data.Add(0);
+            data.Add(0); // Add the first value to prevent a crash due to an empty list.
         }
 
         private void update_graph()
