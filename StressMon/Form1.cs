@@ -23,7 +23,7 @@ namespace StressMon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            data.Add(0); // Add the first value to prevent a crash due to an empty list.
+             data.Add(0); // Add the first value to prevent a crash due to an empty list.
         }
 
         private void update_graph()
@@ -58,6 +58,43 @@ namespace StressMon
         {
             data.Add((float)rng.NextDouble());
             update_graph();
+        }
+
+        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            string line = serialPort1.ReadLine();
+        }
+
+        private void portSelect_DropDown(object sender, EventArgs e)
+        {
+            string[] availbalePorts = System.IO.Ports.SerialPort.GetPortNames();
+
+            portSelect.DataSource = availbalePorts;
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
+        {
+            if (!serialPort1.IsOpen)
+            {
+                serialPort1.PortName = portSelect.Text;
+                serialPort1.Open();
+                connectButton.Text = "Disconnect";
+            }
+            else
+            {
+                serialPort1.Close();
+                connectButton.Text = "Connect";
+            }
+        }
+
+        private void windowWidth_SelectedItemChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timeShiftBar_Scroll(object sender, ScrollEventArgs e)
+        {
+
         }
     }
 }
