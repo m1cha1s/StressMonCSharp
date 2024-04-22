@@ -74,7 +74,7 @@ namespace StressMon
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            if (!serialPort1.IsOpen)
+            if (!serialPort1.IsOpen && portSelect.Text != "")
             {
                 serialPort1.PortName = portSelect.Text;
                 serialPort1.Open();
