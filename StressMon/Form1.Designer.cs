@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend36 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend37 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend38 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend39 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend40 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
@@ -65,24 +65,24 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea8.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea8);
-            legend36.DockedToChartArea = "ChartArea1";
-            legend36.Name = "Legend1";
-            legend37.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Center;
-            legend37.DockedToChartArea = "ChartArea1";
-            legend37.Name = "Legend2";
-            legend38.DockedToChartArea = "ChartArea1";
-            legend38.Name = "Legend3";
-            legend39.DockedToChartArea = "ChartArea1";
-            legend39.Name = "Legend4";
-            legend40.DockedToChartArea = "ChartArea1";
-            legend40.Name = "Legend5";
-            this.chart1.Legends.Add(legend36);
-            this.chart1.Legends.Add(legend37);
-            this.chart1.Legends.Add(legend38);
-            this.chart1.Legends.Add(legend39);
-            this.chart1.Legends.Add(legend40);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend6.DockedToChartArea = "ChartArea1";
+            legend6.Name = "Legend1";
+            legend7.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Center;
+            legend7.DockedToChartArea = "ChartArea1";
+            legend7.Name = "Legend2";
+            legend8.DockedToChartArea = "ChartArea1";
+            legend8.Name = "Legend3";
+            legend9.DockedToChartArea = "ChartArea1";
+            legend9.Name = "Legend4";
+            legend10.DockedToChartArea = "ChartArea1";
+            legend10.Name = "Legend5";
+            this.chart1.Legends.Add(legend6);
+            this.chart1.Legends.Add(legend7);
+            this.chart1.Legends.Add(legend8);
+            this.chart1.Legends.Add(legend9);
+            this.chart1.Legends.Add(legend10);
             this.chart1.Location = new System.Drawing.Point(12, 13);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(986, 559);

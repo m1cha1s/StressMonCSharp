@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -47,10 +48,11 @@ namespace StressMon
             objChart.AxisX.Minimum = timeShiftBar.Value - dataCount;
 
             objChart.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            objChart.AxisY.Maximum = data.Max(t => t.max(stressEn.Checked, temp1En.Checked,temp2En.Checked,bpmEn.Checked,accEn.Checked));
-            objChart.AxisY.Minimum = data.Min(t => t.min(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked));
+            objChart.AxisY.Maximum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Max(t => t.max(stressEn.Checked, temp1En.Checked,temp2En.Checked,bpmEn.Checked,accEn.Checked));
+            objChart.AxisY.Minimum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Min(t => t.min(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked));
 
             if (objChart.AxisY.Maximum == objChart.AxisY.Minimum) return;
+            if (objChart.AxisX.Maximum == objChart.AxisX.Minimum) return;
 
             chart1.Series.Clear();
 
@@ -168,6 +170,20 @@ namespace StressMon
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             string line = serialPort1.ReadLine();
+
+            //try
+            {
+                Debug.WriteLine(line);
+                this.Invoke(new MethodInvoker(delegate 
+                {
+                    add_data(new DataPacket(line));
+                }));
+            } 
+            //catch (Exception ex)
+            {
+                // Ignore for now
+                //Debug.WriteLine("WARNING: Malformed packet");
+            }
         }
 
         private void portSelect_DropDown(object sender, EventArgs e)
@@ -228,13 +244,16 @@ namespace StressMon
             }
             if (startButton.Text == "Start")
             {
+                data.Clear();
+                serialPort1.WriteLine("start");
                 startButton.Text = "Stop";
-                timer1.Enabled = true;
+                //timer1.Enabled = true;
             } 
             else
             {
                 startButton.Text = "Start";
-                timer1.Enabled = false;
+                serialPort1.WriteLine("stop");
+                //timer1.Enabled = false;
                 if (saveRecordingDialog.ShowDialog() == DialogResult.OK)
                 {
                     File.WriteAllLines(saveRecordingDialog.FileName, data.Select(x => x.ToString()));

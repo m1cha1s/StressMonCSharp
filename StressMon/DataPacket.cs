@@ -33,9 +33,9 @@ namespace StressMon
             int i = 0;
             Time = float.Parse(columns[i++], CultureInfo.InvariantCulture);
             AccMag = float.Parse(columns[i++], CultureInfo.InvariantCulture);
-            //Bpm = float.Parse(columns[i++]);
-            //Temp1 = float.Parse(columns[i++]);
-            //Temp2 = float.Parse(columns[i++]);
+            Bpm = float.Parse(columns[i++], CultureInfo.InvariantCulture);
+            Temp1 = float.Parse(columns[i++], CultureInfo.InvariantCulture);
+            Temp2 = float.Parse(columns[i++], CultureInfo.InvariantCulture);
         }
 
         public float max(bool stressEn, bool temp1En, bool temp2En, bool bpmEn, bool accEn)
