@@ -48,8 +48,8 @@ namespace StressMon
             objChart.AxisX.Minimum = timeShiftBar.Value - dataCount;
 
             objChart.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
-            objChart.AxisY.Maximum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Max(t => t.max(stressEn.Checked, temp1En.Checked,temp2En.Checked,bpmEn.Checked,accEn.Checked));
-            objChart.AxisY.Minimum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Min(t => t.min(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked));
+            objChart.AxisY.Maximum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Max(t => t.max(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked))+0.1;
+            objChart.AxisY.Minimum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Min(t => t.min(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked))-0.1;
 
             if (objChart.AxisY.Maximum == objChart.AxisY.Minimum) return;
             if (objChart.AxisX.Maximum == objChart.AxisX.Minimum) return;
@@ -171,18 +171,19 @@ namespace StressMon
         {
             string line = serialPort1.ReadLine();
 
-            //try
+            try
             {
                 Debug.WriteLine(line);
+                DataPacket dp = new DataPacket(line);
                 this.Invoke(new MethodInvoker(delegate 
                 {
-                    add_data(new DataPacket(line));
+                        add_data(dp);
                 }));
             } 
-            //catch (Exception ex)
+            catch (Exception ex)
             {
                 // Ignore for now
-                //Debug.WriteLine("WARNING: Malformed packet");
+                Debug.WriteLine("WARNING: Malformed packet");
             }
         }
 
@@ -245,14 +246,14 @@ namespace StressMon
             if (startButton.Text == "Start")
             {
                 data.Clear();
-                serialPort1.WriteLine("start");
+                serialPort1.WriteLine("S");
                 startButton.Text = "Stop";
                 //timer1.Enabled = true;
             } 
             else
             {
                 startButton.Text = "Start";
-                serialPort1.WriteLine("stop");
+                serialPort1.WriteLine("S");
                 //timer1.Enabled = false;
                 if (saveRecordingDialog.ShowDialog() == DialogResult.OK)
                 {
