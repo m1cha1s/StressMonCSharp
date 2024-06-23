@@ -25,7 +25,7 @@ namespace StressMon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-             data.Add(new DataPacket(0,0,0,0,0)); // Add the first value to prevent a crash due to an empty list.
+             data.Add(new DataPacket(0,0,0,0,0,0,0)); // Add the first value to prevent a crash due to an empty list.
         }
 
         private void update_graph()
@@ -43,9 +43,11 @@ namespace StressMon
             var objChart = chart1.ChartAreas[0];
             objChart.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
 
+            timeShiftBar.Value = Math.Min(timeShiftBar.Value, dataCount);
+
             // Todo put time on this axis not counts
-            objChart.AxisX.Maximum = timeShiftBar.Value;
             objChart.AxisX.Minimum = timeShiftBar.Value - dataCount;
+            objChart.AxisX.Maximum = timeShiftBar.Value;
 
             objChart.AxisY.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
             objChart.AxisY.Maximum = data.Skip((int)objChart.AxisX.Minimum).Take(dataCount).Max(t => t.max(stressEn.Checked, temp1En.Checked, temp2En.Checked, bpmEn.Checked, accEn.Checked))+0.1;
@@ -68,7 +70,7 @@ namespace StressMon
 
                 for (int i = 0; i < data.Count; i++)
                 {
-                    chart1.Series[chartName].Points.Add(data[i].stress());
+                    chart1.Series[chartName].Points.Add(data[i].stress()*100);
                 }
             }
             if (temp1En.Checked)
@@ -113,7 +115,7 @@ namespace StressMon
 
                 for (int i = 0; i < data.Count; i++)
                 {
-                    chart1.Series[chartName].Points.Add(data[i].Bpm);
+                    chart1.Series[chartName].Points.Add(data[i].HR);
                 }
             }
             if (accEn.Checked)
@@ -128,7 +130,7 @@ namespace StressMon
 
                 for (int i = 0; i < data.Count; i++)
                 {
-                    chart1.Series[chartName].Points.Add(data[i].AccMag);
+                    chart1.Series[chartName].Points.Add(data[i].RR);
                 }
             }
 
@@ -160,6 +162,8 @@ namespace StressMon
         private void timer1_Tick(object sender, EventArgs e)
         {
             add_data( new DataPacket(
+                (float)rng.NextDouble(),
+                (float)rng.NextDouble(),
                 (float)rng.NextDouble(),
                 (float)rng.NextDouble(),
                 (float)rng.NextDouble(),
@@ -269,7 +273,13 @@ namespace StressMon
                 data.Clear();
                 foreach (string line in File.ReadAllLines(openRecordingDialog.FileName))
                 {
-                    add_data(new DataPacket(line));
+                    try
+                    {
+                        add_data(new DataPacket(line));
+                    } catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
                 }
                 
             }
