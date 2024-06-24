@@ -54,7 +54,7 @@ namespace StressMon
                 temp2En ? Temp2 : float.NegativeInfinity,
                 bpmEn ? HR : float.NegativeInfinity,
                 accEn ? RR : float.NegativeInfinity,
-                stressEn ? stress() : float.NegativeInfinity
+                stressEn ? stress()*100 : float.NegativeInfinity
             };
             return a.Max(t => t);
         }
@@ -66,7 +66,7 @@ namespace StressMon
                 temp2En ? Temp2 : float.PositiveInfinity,
                 bpmEn ? HR : float.PositiveInfinity,
                 accEn ? RR : float.PositiveInfinity,
-                stressEn ? stress() : float.PositiveInfinity
+                stressEn ? stress()*100 : float.PositiveInfinity
             };
             return a.Min(t => t);
         }

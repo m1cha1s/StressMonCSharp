@@ -25,7 +25,7 @@ namespace StressMon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-             data.Add(new DataPacket(0,0,0,0,0,0,0)); // Add the first value to prevent a crash due to an empty list.
+             //data.Add(new DataPacket(0,0,0,0,0,0,0)); // Add the first value to prevent a crash due to an empty list.
         }
 
         private void update_graph()
@@ -43,7 +43,7 @@ namespace StressMon
             var objChart = chart1.ChartAreas[0];
             objChart.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number;
 
-            timeShiftBar.Value = Math.Min(timeShiftBar.Value, dataCount);
+            timeShiftBar.Value = Math.Min(timeShiftBar.Value, data.Count);
 
             // Todo put time on this axis not counts
             objChart.AxisX.Minimum = timeShiftBar.Value - dataCount;
@@ -142,11 +142,13 @@ namespace StressMon
             timeShiftBar.Maximum = data.Count;
 
             int dataCount = data.Count;
-
-            if (dataCount > int.Parse(windowWidth.Text))
+            try
             {
-                dataCount = int.Parse(windowWidth.Text);
-            }
+                if (dataCount > int.Parse(windowWidth.Text))
+                {
+                    dataCount = int.Parse(windowWidth.Text);
+                }
+            } catch (Exception ex) { return; }
 
             timeShiftBar.Minimum = dataCount;
 
@@ -220,10 +222,13 @@ namespace StressMon
 
             int dataCount = data.Count;
 
-            if (dataCount > int.Parse(windowWidth.Text))
+            try
             {
-                dataCount = int.Parse(windowWidth.Text);
-            }
+                if (dataCount > int.Parse(windowWidth.Text))
+                {
+                    dataCount = int.Parse(windowWidth.Text);
+                }
+            } catch (Exception ex) { return; }
 
             timeShiftBar.Minimum = dataCount;
 
